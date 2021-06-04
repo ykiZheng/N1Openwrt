@@ -1,7 +1,6 @@
 name: Package OpenWrt
 
 on:
-  repository_dispatch:
   workflow_dispatch:
       
 env:
