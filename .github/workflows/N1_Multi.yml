@@ -117,7 +117,8 @@ jobs:
         types: s905d
         out: ${{ env.UPLOAD }}
         sub-name: ${{ env.SUB_VERSION}}
-        openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
+        whoami: mingxiaoyu
+        openwrt-path: openwrt/bin/targets/*/*
         
     - name: Create release
       if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
