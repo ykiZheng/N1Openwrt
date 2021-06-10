@@ -1,4 +1,4 @@
-![N1](https://github.com/mingxiaoyu/N1Openwrt/workflows/N1/badge.svg)
+[![N1 Multiple Version](https://github.com/mingxiaoyu/N1Openwrt/actions/workflows/N1_Multi.yml/badge.svg)](https://github.com/mingxiaoyu/N1Openwrt/actions/workflows/N1_Multi.yml)
 
 N1 OpenWrt.
 
