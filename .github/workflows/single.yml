@@ -111,7 +111,7 @@ jobs:
       uses: mingxiaoyu/package-flippy-openwrt@main
       id: package
       with:
-        types: s905d
+        types: s905d,beikeyun,s905x3
         out: ${{ env.UPLOAD }}
         openwrt-path: openwrt/bin/targets/*/*
    

@@ -126,10 +126,19 @@ jobs:
       uses: mingxiaoyu/package-flippy-openwrt@main
       id: package
       with:
-        types: s905d
+        types: s905d,beikeyun,s905x3
         out: ${{ env.UPLOAD }}
         sub-name: ${{ env.SUB_VERSION}}
         whoami: mingxiaoyu
+        openwrt-path: openwrt/bin/targets/*/*
+
+    - name: Package OpenWrt with flippy script(+)     
+      uses: mingxiaoyu/package-flippy-openwrt@main
+      with:
+        types: s905d,beikeyun,s905x3
+        kernel-version: latest+
+        out: ${{ env.UPLOAD }}
+        sub-name: ${{ env.SUB_VERSION}}
         openwrt-path: openwrt/bin/targets/*/*
         
     - name: Create Release
