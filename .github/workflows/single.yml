@@ -34,6 +34,7 @@ jobs:
         echo "cpu model: $cpu_model "
         e5CPU="E5"
         if [[ $cpu_model =~ $e5CPU ]]
+        then
             echo "::set-output name=status::cancel"
         fi
         
