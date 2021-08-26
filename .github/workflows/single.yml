@@ -27,6 +27,20 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
+    - name: Check CPU
+      id: checkcpu
+      run: |      
+        cpu_model=`cat /proc/cpuinfo  |grep 'model name' |gawk -F : '{print $2}' | uniq -c  | sed 's/^ \+[0-9]\+ //g'`
+        echo "cpu model: $cpu_model "
+        e5CPU="E5"
+        if [[ $cpu_model =~ $e5CPU ]]
+            echo "::set-output name=status::cancel"
+        fi
+        
+    - name: cancelling
+      if: steps.checkcpu.outputs.status == 'cancel'
+      uses: andymckay/cancel-action@0.2
+      
     - name: Checkout
       uses: actions/checkout@main
 
