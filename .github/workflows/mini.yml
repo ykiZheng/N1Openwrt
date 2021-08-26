@@ -8,6 +8,7 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
+  SUB_VERSION: mini
   CONFIG_FILE: mini.config
   DIY_SH: diy.sh
   TZ: Asia/Shanghai
