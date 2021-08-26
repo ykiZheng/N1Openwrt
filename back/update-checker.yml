@@ -1,0 +1,63 @@
+name: Update Checker
+  
+on:
+  workflow_dispatch:
+    inputs:
+      update:
+        description: 'Force update'
+        required: false
+        default: 'false'
+#  schedule:
+#    - cron: 0 3 */3 * *
+
+env:
+    MULTIPLE_BUILD: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Get Commit Hash
+      id: getHash
+      run: |
+        commitHash=$(curl "https://api.github.com/repos/coolsnowwolf/lede/git/refs/heads/master" | jq '.object.sha')
+        echo "::set-output name=commitHash::$commitHash"
+        
+    - name: Get helloworld Commit Hash
+      id: getHash2
+      run: |
+        commitHash=$(curl  "https://api.github.com/repos/fw876/helloworld/git/refs/heads/master" | jq '.object.sha')
+        echo "::set-output name=commitHash2::$commitHash"  
+        
+    - name: Compare Commit Hash
+      id: cacheHash
+      uses: actions/cache@v2
+      with:
+        path: .commitHash
+        key: HEAD-${{ steps.getHash.outputs.commitHash }}-${{ steps.getHash2.outputs.commitHash2 }}
+
+    - name: Save New Commit Hash
+      if: steps.cacheHash.outputs.cache-hit != 'true'
+      run: |
+        echo ${{ steps.getHash.outputs.commitHash}}-${{ steps.getHash2.outputs.commitHash2 }} | tee .commitHash
+        
+    - name: Trigger multiple build
+      if: env.MULTIPLE_BUILD == 'true' && (steps.cacheHash.outputs.cache-hit != 'true' || (github.event.inputs.update == 'true' && github.event.inputs.update  != 'false'))
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.RELEASES_TOKEN  }}
+        event-type: multiple
+        
+    - name: Trigger single build
+      if: env.MULTIPLE_BUILD != 'true' && (steps.cacheHash.outputs.cache-hit != 'true' || (github.event.inputs.update == 'true' && github.event.inputs.update  != 'false')) 
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.RELEASES_TOKEN  }}
+        event-type: single
+        
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 1
+        keep_minimum_runs: 1
