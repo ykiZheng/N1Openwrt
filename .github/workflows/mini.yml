@@ -72,6 +72,7 @@ jobs:
     - name: Update & Install Feeds
       run: |
         cd openwrt
+        export GIT_SSL_NO_VERIFY=1
         ./scripts/feeds update -a
         ./scripts/feeds install -a
       
