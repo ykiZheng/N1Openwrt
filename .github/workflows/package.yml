@@ -48,7 +48,7 @@ jobs:
         sudo -E apt-get -qq clean
         
     - name: Package OpenWrt with flippy script(+o) 
-      uses: ykiZheng/package-flippy-openwrt@main
+      uses: ykiZheng/package-flippy-openwrt@master
       with:
         types: l1pro,s905d,beikeyun,s905x3
         out: ${{ env.UPLOAD }}
@@ -56,7 +56,7 @@ jobs:
         openwrt-url: https://github.com/ykiZheng/N1Openwrt/releases/download/${{ env.version }}/openwrt-armvirt-64-default-rootfs-${{ env.SUB_VERSION }}.tar.gz 
     
     - name: Package OpenWrt with flippy script(+)     
-      uses: ykiZheng/package-flippy-openwrt@main
+      uses: ykiZheng/package-flippy-openwrt@master
       with:
         types: l1pro,s905d,beikeyun,s905x3
         kernel-version: latest+
